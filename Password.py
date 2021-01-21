@@ -15,12 +15,12 @@ class account():
 def load_file(new_account):
     conn = sqlite3.connect('accountsdb.sqlite')
     cur = conn.cursor()
-    cur.executescript('''
-    CREATE TABLE IF NOT EXITS Accounts (
-        type   TEXT     ,
+    cur.execute('''
+    CREATE TABLE IF NOT EXISTS Accounts (
+        type   TEXT,
         mail_user   TEXT,
         password TEXT
-    ); ''')
+    )''')
 
     cur.execute('''INSERT OR IGNORE INTO Accounts (type)
         VALUES ( ? )''', ( new_account.name, ) )
@@ -30,6 +30,8 @@ def load_file(new_account):
 
     cur.execute('''INSERT OR IGNORE INTO Accounts (password)
         VALUES ( ? )''', ( new_account.password, ) )
+    cur.close()
+    conn.commit()
     return None
 
 def create(name, email, password):
@@ -42,7 +44,7 @@ def main():
     y = input('Dame el correo o usuario: ')
     z = input('Dame la contraseña: ')
     account = create(x, y, z)
-    load_file(accout)
+    load_file(account)
 
 
 if __name__=="__main__":
