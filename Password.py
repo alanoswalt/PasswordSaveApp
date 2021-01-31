@@ -22,16 +22,16 @@ def load_file(new_account):
         password TEXT
     )''')
 
-    cur.execute('''INSERT OR IGNORE INTO Accounts (type)
-        VALUES ( ? )''', ( new_account.name, ) )
+    cur.execute('''INSERT OR IGNORE INTO Accounts (type, mail_user, password)
+        VALUES ( ?, ?, ? )''', ( new_account.name, new_account.email_username, new_account.password, ) )
 
-    cur.execute('''INSERT OR IGNORE INTO Accounts (mail_user)
-        VALUES ( ? )''', ( new_account.email_username, ) )
+    #cur.execute('''INSERT OR IGNORE INTO Accounts (mail_user)
+    #    VALUES ( ? )''', ( new_account.email_username, ) )
 
-    cur.execute('''INSERT OR IGNORE INTO Accounts (password)
-        VALUES ( ? )''', ( new_account.password, ) )
-    cur.close()
+    #cur.execute('''INSERT OR IGNORE INTO Accounts (password)
+    #    VALUES ( ? )''', ( new_account.password, ) )
     conn.commit()
+    cur.close()
     return None
 
 def create(name, email, password):
